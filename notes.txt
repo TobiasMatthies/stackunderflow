@@ -1,0 +1,5 @@
+Abgeschlossen:
+
+Permission classes, custom permissions, etc
+
+Angefangen: Token authentication
