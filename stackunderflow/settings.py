@@ -140,9 +140,11 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '10/minute',
-        'user': '1000/minute',
+        'user': '30/minute',
         'question': '5/minute',
-        'question-post': '5/minute',
+        'question-scope': '3/minute',
+        'question-get': '10/minute',
+        'question-post': '6/minute',
         'question-put': '5/minute',
         'question-delete': '5/minute',
         'question-patch': '5/minute',
