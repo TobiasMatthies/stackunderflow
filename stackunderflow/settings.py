@@ -142,7 +142,7 @@ REST_FRAMEWORK = {
         'anon': '10/minute',
         'user': '30/minute',
         'question': '5/minute',
-        'question-scope': '3/minute',
+        'answer-scope': '10/minute',
         'question-get': '10/minute',
         'question-post': '6/minute',
         'question-put': '5/minute',
