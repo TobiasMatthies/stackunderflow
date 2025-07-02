@@ -16,6 +16,11 @@ class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='frontend')
+    upload = models.ForeignKey('FileUpload', on_delete=models.CASCADE, null=True, blank=True)
+
+class FileUpload(models.Model):
+    file = models.FileField(upload_to='uploads/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
 class Answer(models.Model):
     content = models.TextField()
@@ -30,5 +35,3 @@ class Like(models.Model):
 
     class Meta:
         unique_together = ('user', 'question')
-
-

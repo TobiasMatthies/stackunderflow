@@ -2,8 +2,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, generics, permissions
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import filters
-from forum_app.models import Like, Question, Answer
-from .serializers import QuestionSerializer, AnswerSerializer, LikeSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from forum_app.models import Like, Question, Answer, FileUpload
+from .serializers import QuestionSerializer, AnswerSerializer, LikeSerializer, FileUploadSerializer
 from .permissions import IsOwnerOrAdmin, CustomQuestionPermission
 from .throttling import QuestionThrottle, QuestionGetThrottle, QuestionPostThrottle
 
@@ -67,3 +70,12 @@ class LikeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class FileUploadView(APIView):
+    def post(self, request, format=None):
+        serializer = FileUploadSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

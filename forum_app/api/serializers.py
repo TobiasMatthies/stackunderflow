@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from forum_app.models import Like, Answer, Question
+from forum_app.models import Like, Answer, Question, FileUpload
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,11 +20,18 @@ class LikeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("You have already liked this question.")
 
         return data
-    
+
 class QuestionSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True, read_only=True)
     likes = LikeSerializer(many=True, read_only=True)
+    upload = serializers.FileField(source='upload.file', allow_null=True, required=False)
 
     class Meta:
         model = Question
-        fields = ['id', 'title', 'content', 'author', 'created_at', 'answers', 'likes']
+        fields = ['id', 'title', 'content', 'author', 'created_at', 'answers', 'likes', 'upload']
+
+
+class FileUploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FileUpload
+        fields = ['file', 'uploaded_at']
